@@ -1,10 +1,10 @@
-
 // DECLARE VARIALBES
 var wordList = [];
 var activeWord;
 var activeWordLetters = [];
 var keyEntered = "";
 var correctKeysEntered = ["b", "a", "r"];
+window.lettersEntered = [];
 
 ////// GAME LOGIC
 
@@ -16,6 +16,7 @@ wordList = [
     "fooba"
 ]
 console.log(wordList);
+console.log("correctKeysEntered: " + correctKeysEntered);
 
 
 // SELECT RANDOM WORD FROM LIST
@@ -28,37 +29,25 @@ console.log("activeWord: " + activeWord);
 for (var i = 0; i < activeWord.length; i++) {
     activeWordLetters.push(activeWord[i]);
 }
-// console.log(activeWordLetters);
 
 
 
-// DETERMINE IF KEY PRESSED IS IN THE ACTIVE WORD LIST ARRAY ***FIX THIS
-// function myKeyPress(e){
-//     var keynum;
-
-//     if(window.event) { // IE                    
-//       keynum = e.keyCode;
-//     } else if(e.which){ // Netscape/Firefox/Opera                   
-//       keynum = e.which;
-//     }
-
-//     // alert(String.fromCharCode(keynum));
-//   }
-//   myKeyPress();
-//   console.log(myKeyPress());
 
 
-var n = activeWord.indexOf(keyEntered); // VARIABLE TO TEST IF KEYENTERED IS A LETTER IN THE WORD
-// console.log(n);
+// DETECT KEY PRESSED, PUSH IT TO THE lettersEntered ARRAY
 
-if (n != -1) { //IF THE KEY ENTERED IS IN THE WORD
-    correctKeysEntered.push(keyEntered);  //THEN PUSH IT TO THE CORRECTKEYS ARRAY
+// var lettersEntered = [];
+var keyPressed;
+function myFunction(e) {
+    keyPressed = e.which;
+    lettersEntered.push(keyPressed);
+        
+    console.log("lettersEntered: " + lettersEntered);
 }
-// console.log("keyEntered: " + keyEntered);
-// console.log("correctKeysEntered: " + correctKeysEntered);
 
 
 
+console.log("lettersEntered (Global): " + lettersEntered);
 
 // PAGE FORMATTING
 // -- HIDE UNNECESSARY WORD SPACES
@@ -103,10 +92,11 @@ switch(activeWord.length - 1) {
 
 // PUSH THE CORRECT LETTERS ENTERED TO THEIR RESPECTIVE IDs ON THE PAGE
 
-var letterNum;
+
 var textToWrite;
 
 window.onload = function () {
+
 for (i=0; i < activeWord.length; i++) {
 var para = document.createElement("P"); 
 para.setAttribute("id","letter" + i);                      // Create a <p> element
@@ -116,33 +106,36 @@ var t = document.createTextNode(textToWrite);      // Create a text node
 para.appendChild(t);                                          // Append the text to <p>
 document.getElementById("letters").appendChild(para); 
     }
+
+what();
+function what () {
+    // document.getElementById("letter0").innerHTML = "this text";
+    
+    for (i=0; i<lettersToPush.length; i++) {
+    // find the right div
+    var rightDiv = "letter" + lettersToPush[i];
+
+    testVar = lettersToPush[i];
+    testVar2 = activeWord[testVar];
+    document.getElementById(rightDiv).innerHTML = testVar2;
+    }
+
+    
+};
 }
 
-// console.log(activeWord.indexOf(correctKeysEntered[0]));
-console.log("letterNum: " + letterNum);
-console.log("textToWrite: " + textToWrite);
-
-// window.onload = function () {
-// for (i=0; i < activeWord.length; i++) {
-// var para = document.createElement("P"); 
-// para.setAttribute("id","letter" + i);                      // Create a <p> element
-// letterNum = activeWord.indexOf(correctKeysEntered[i])
-// textToWrite = activeWord[letterNum];
-// var t = document.createTextNode(textToWrite);      // Create a text node
-// para.appendChild(t);                                          // Append the text to <p>
-// document.getElementById("letters").appendChild(para); 
-//     }
-// }
+// WRITE correctKeysEntered to lettersToPush ARRAY
 var lettersToPush = [];
-// WRITE CORRECT LETTERS TO DESPECTIVE IDs
-// window.onload= function () {
-for (i=0; i < (correctKeysEntered.length - 1); i++) {
-//  lookup correctkeysentered position in activeword
-// var testArray = [];
-var testA = activeWord.indexOf(correctKeysEntered[i]);
-lettersToPush.push(testA);
+
+for (i=0; i < (correctKeysEntered.length); i++) {
+    var test1 = correctKeysEntered[i];
+    var test3 = activeWord.includes(test1);
+    if (test3) {
+        var testA = activeWord.indexOf(correctKeysEntered[i]);
+        lettersToPush.push(testA);
     }
-// }
-console.log("testA: " + testA);
-console.log("testArray: " + lettersToPush);
+}
+
+console.log("lettersToPush: " + lettersToPush);
+
 
