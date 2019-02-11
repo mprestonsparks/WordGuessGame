@@ -3,10 +3,10 @@
 var wordList = [];
 var activeWord;
 var activeWordLetters = [];
-var keyEntered = "b";
-var correctKeysEntered = ["b"];
+var keyEntered = "";
+var correctKeysEntered = ["b", "a", "r"];
 
-// GAME LOGIC
+////// GAME LOGIC
 
 // CREATE WORD LIST
 wordList = [
@@ -20,7 +20,7 @@ console.log(wordList);
 
 // SELECT RANDOM WORD FROM LIST
 activeWord = wordList[Math.floor(Math.random() * wordList.length)];
-console.log(activeWord);
+console.log("activeWord: " + activeWord);
 
 
 
@@ -28,7 +28,7 @@ console.log(activeWord);
 for (var i = 0; i < activeWord.length; i++) {
     activeWordLetters.push(activeWord[i]);
 }
-console.log(activeWordLetters);
+// console.log(activeWordLetters);
 
 
 
@@ -49,13 +49,13 @@ console.log(activeWordLetters);
 
 
 var n = activeWord.indexOf(keyEntered); // VARIABLE TO TEST IF KEYENTERED IS A LETTER IN THE WORD
-console.log(n);
+// console.log(n);
 
 if (n != -1) { //IF THE KEY ENTERED IS IN THE WORD
     correctKeysEntered.push(keyEntered);  //THEN PUSH IT TO THE CORRECTKEYS ARRAY
 }
-console.log("keyEntered: " + keyEntered);
-console.log("correctKeysEntered: " + correctKeysEntered);
+// console.log("keyEntered: " + keyEntered);
+// console.log("correctKeysEntered: " + correctKeysEntered);
 
 
 
@@ -65,57 +65,84 @@ console.log("correctKeysEntered: " + correctKeysEntered);
 window.onload = function() {
 switch(activeWord.length - 1) {
     case 0:
-        // document.getElementById("firstLetter").style.display = "none";
-        document.getElementById("secondLetter").style.display = "none";
-        document.getElementById("thirdLetter").style.display = "none";
-        document.getElementById("fourthLetter").style.display = "none";
-        document.getElementById("fifthLetter").style.display = "none";
+    // document.getElementById("letter1").style.display = "none";
+        document.getElementById("letter2").style.display = "none";
+        document.getElementById("letter3").style.display = "none";
+        document.getElementById("letter4").style.display = "none";
+        document.getElementById("letter5").style.display = "none";
         break;
     case 1:
-        // document.getElementById("firstLetter").style.display = "none";
-        // document.getElementById("secondLetter").style.display = "none";
-        document.getElementById("thirdLetter").style.display = "none";
-        document.getElementById("fourthLetter").style.display = "none";
-        document.getElementById("fifthLetter").style.display = "none";
+        // document.getElementById("letter1").style.display = "none";
+        // document.getElementById("letter2").style.display = "none";
+        document.getElementById("letter3").style.display = "none";
+        document.getElementById("letter4").style.display = "none";
+        document.getElementById("letter5").style.display = "none";
         break;
     case 2:
-        // document.getElementById("firstLetter").style.display = "none";
-        // document.getElementById("secondLetter").style.display = "none";
-        // document.getElementById("thirdLetter").style.display = "none";
-        document.getElementById("fourthLetter").style.display = "none";
-        document.getElementById("fifthLetter").style.display = "none";
+        // document.getElementById("letter1").style.display = "none";
+        // document.getElementById("letter2").style.display = "none";
+        // document.getElementById("letter3").style.display = "none";
+        document.getElementById("letter4").style.display = "none";
+        document.getElementById("letter5").style.display = "none";
         break;
     case 3:
-        // document.getElementById("firstLetter").style.display = "none";
-        // document.getElementById("secondLetter").style.display = "none";
-        // document.getElementById("thirdLetter").style.display = "none";
-        // document.getElementById("fourthLetter").style.display = "none";
-        document.getElementById("fifthLetter").style.display = "none";
+        // document.getElementById("letter1").style.display = "none";
+        // document.getElementById("letter2").style.display = "none";
+        // document.getElementById("letter3").style.display = "none";
+        // document.getElementById("letter4").style.display = "none";
+        document.getElementById("letter5").style.display = "none";
         break;
     case 4:
-        // document.getElementById("firstLetter").style.display = "none";
-        // document.getElementById("secondLetter").style.display = "none";
-        // document.getElementById("thirdLetter").style.display = "none";
-        // document.getElementById("fourthLetter").style.display = "none";
-        // document.getElementById("fifthLetter").style.display = "none";
+        // document.getElementById("letter1").style.display = "none";
+        // document.getElementById("letter2").style.display = "none";
+        // document.getElementById("letter3").style.display = "none";
+        // document.getElementById("letter4").style.display = "none";
+        // document.getElementById("letter5").style.display = "none";
 }
 }
 
+// PUSH THE CORRECT LETTERS ENTERED TO THEIR RESPECTIVE IDs ON THE PAGE
 
-// PUT THE CORRECT LETTERS GUESSED IN THE CORRECT LETTERS DIV   
-// window.onload = function() {
-//     for (var i = 0; i =< activeWord.length; i++) {
-        
+var letterNum;
+var textToWrite;
+
+window.onload = function () {
+for (i=0; i < activeWord.length; i++) {
+var para = document.createElement("P"); 
+para.setAttribute("id","letter" + i);                      // Create a <p> element
+// letterNum = activeWord.indexOf(correctKeysEntered[i])
+textToWrite = "test";
+var t = document.createTextNode(textToWrite);      // Create a text node
+para.appendChild(t);                                          // Append the text to <p>
+document.getElementById("letters").appendChild(para); 
+    }
+}
+
+// console.log(activeWord.indexOf(correctKeysEntered[0]));
+console.log("letterNum: " + letterNum);
+console.log("textToWrite: " + textToWrite);
+
+// window.onload = function () {
+// for (i=0; i < activeWord.length; i++) {
+// var para = document.createElement("P"); 
+// para.setAttribute("id","letter" + i);                      // Create a <p> element
+// letterNum = activeWord.indexOf(correctKeysEntered[i])
+// textToWrite = activeWord[letterNum];
+// var t = document.createTextNode(textToWrite);      // Create a text node
+// para.appendChild(t);                                          // Append the text to <p>
+// document.getElementById("letters").appendChild(para); 
 //     }
 // }
-
-console.log("correctKeysEntered[0]: "+ correctKeysEntered[0]);
-
-
-// PUSH THE FIRST CORRECT LETTER TO THE FIRSTLETTER DIV
-// CHANGE THIS TO LOOP FOR ALL CORRECT LETTERS ??
-window.onload = function() {
-document.getElementById("firstLetter").innerHTML = correctKeysEntered[0];
-}
-console.log(correctKeysEntered[0]);
+var lettersToPush = [];
+// WRITE CORRECT LETTERS TO DESPECTIVE IDs
+// window.onload= function () {
+for (i=0; i < (correctKeysEntered.length - 1); i++) {
+//  lookup correctkeysentered position in activeword
+// var testArray = [];
+var testA = activeWord.indexOf(correctKeysEntered[i]);
+lettersToPush.push(testA);
+    }
+// }
+console.log("testA: " + testA);
+console.log("testArray: " + lettersToPush);
 
