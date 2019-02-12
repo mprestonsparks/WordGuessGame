@@ -2,9 +2,14 @@
 var wordList = [];
 var activeWord;
 var activeWordLetters = [];
-var correctKeysEntered = ["b", "a", "r"];
+var correctKeysEntered = ["b", "r"];
 var lettersEntered = [];
 
+var guessLimit = 5;
+var guessesLeft;
+var gameStatus;
+var compScore = 0;
+var roundNum;
 ////// GAME LOGIC
 
 // CREATE WORD LIST
@@ -38,104 +43,95 @@ function myFunction(e) {
     lettersEntered.push(keyPressed);
         
     seperateCorrect();
+    calcGuessesLeft();
+    console.log("correctKeysEntered: " + correctKeysEntered);
 }
 
 
-var correctLettersToPush = [];
 function seperateCorrect() {
     for (i=0; i<=lettersEntered.length; i++) {
         
         if ((lettersEntered.indexOf(activeWordLetters[i])) != -1) {
-            correctLettersToPush.push(activeWordLetters[i]);
+            correctKeysEntered.push(activeWordLetters[i]);
         }
     }
-    console.log("correctLettersToPush: " + correctLettersToPush);
+}
 
 
-    for (i=0; i<=correctLettersToPush.length; i++) {
-    correctKeysEntered[i] = correctLettersToPush[i];
-    }
-    console.log("correctKeysEntered: " + correctKeysEntered);
-
-};
-
+    
 
 
 
 // PAGE FORMATTING
 // -- HIDE UNNECESSARY WORD SPACES
 window.onload = function() {
-switch(activeWord.length - 1) {
-    case 0:
-    // document.getElementById("letter1").style.display = "none";
-        document.getElementById("letter2").style.display = "none";
-        document.getElementById("letter3").style.display = "none";
-        document.getElementById("letter4").style.display = "none";
-        document.getElementById("letter5").style.display = "none";
-        break;
-    case 1:
+    switch(activeWord.length - 1) {
+        case 0:
         // document.getElementById("letter1").style.display = "none";
-        // document.getElementById("letter2").style.display = "none";
-        document.getElementById("letter3").style.display = "none";
-        document.getElementById("letter4").style.display = "none";
-        document.getElementById("letter5").style.display = "none";
-        break;
-    case 2:
-        // document.getElementById("letter1").style.display = "none";
-        // document.getElementById("letter2").style.display = "none";
-        // document.getElementById("letter3").style.display = "none";
-        document.getElementById("letter4").style.display = "none";
-        document.getElementById("letter5").style.display = "none";
-        break;
-    case 3:
-        // document.getElementById("letter1").style.display = "none";
-        // document.getElementById("letter2").style.display = "none";
-        // document.getElementById("letter3").style.display = "none";
-        // document.getElementById("letter4").style.display = "none";
-        document.getElementById("letter5").style.display = "none";
-        break;
-    case 4:
-        // document.getElementById("letter1").style.display = "none";
-        // document.getElementById("letter2").style.display = "none";
-        // document.getElementById("letter3").style.display = "none";
-        // document.getElementById("letter4").style.display = "none";
-        // document.getElementById("letter5").style.display = "none";
+            document.getElementById("letter2").style.display = "none";
+            document.getElementById("letter3").style.display = "none";
+            document.getElementById("letter4").style.display = "none";
+            document.getElementById("letter5").style.display = "none";
+            break;
+        case 1:
+            // document.getElementById("letter1").style.display = "none";
+            // document.getElementById("letter2").style.display = "none";
+            document.getElementById("letter3").style.display = "none";
+            document.getElementById("letter4").style.display = "none";
+            document.getElementById("letter5").style.display = "none";
+            break;
+        case 2:
+            // document.getElementById("letter1").style.display = "none";
+            // document.getElementById("letter2").style.display = "none";
+            // document.getElementById("letter3").style.display = "none";
+            document.getElementById("letter4").style.display = "none";
+            document.getElementById("letter5").style.display = "none";
+            break;
+        case 3:
+            // document.getElementById("letter1").style.display = "none";
+            // document.getElementById("letter2").style.display = "none";
+            // document.getElementById("letter3").style.display = "none";
+            // document.getElementById("letter4").style.display = "none";
+            document.getElementById("letter5").style.display = "none";
+            break;
+        case 4:
+            // document.getElementById("letter1").style.display = "none";
+            // document.getElementById("letter2").style.display = "none";
+            // document.getElementById("letter3").style.display = "none";
+            // document.getElementById("letter4").style.display = "none";
+            // document.getElementById("letter5").style.display = "none";
+    }
 }
-}
+
 
 // PUSH THE CORRECT LETTERS ENTERED TO THEIR RESPECTIVE IDs ON THE PAGE
 
-
-var textToWrite;
-
 window.onload = function () {
 
-for (i=0; i < activeWord.length; i++) {
-var para = document.createElement("span"); 
-para.setAttribute("id","letter" + i);                      // Create a <p> element
-// letterNum = activeWord.indexOf(correctKeysEntered[i])
-textToWrite = "____";
-var t = document.createTextNode(textToWrite);      // Create a text node
-para.appendChild(t);                                          // Append the text to <p>
-document.getElementById("letters").appendChild(para); 
-    }
+    // Create DIVs for letters, assign ID tags, write default text
+    for (i=0; i < activeWord.length; i++) {
+        var para = document.createElement("span"); // Create element
+        para.setAttribute("id","letter" + i); // Give element correct ID tag
+        // letterNum = activeWord.indexOf(correctKeysEntered[i])
+        var textToWrite = "____"; // write default message for unguessed letter
+        var t = document.createTextNode(textToWrite); // Create text node to replace default text
+        para.appendChild(t); // Append text to element
+        document.getElementById("letters").appendChild(para); // Write text to page 
+        };
 
-what();
-function what () {
-    // document.getElementById("letter0").innerHTML = "this text";
-    
-    for (i=0; i<lettersToPush.length; i++) {
-    // find the right div
-    var rightDiv = "letter" + lettersToPush[i];
 
-    testVar = lettersToPush[i];
-    testVar2 = activeWord[testVar];
-    document.getElementById(rightDiv).innerHTML = testVar2;
-    }
 
-    
+    writeLettersToPage();
+    function writeLettersToPage () {
+        // document.getElementById("letter0").innerHTML = "this text";
+        for (i=0; i<lettersToPush.length; i++) {
+            var rightDiv = "letter" + lettersToPush[i]; // Assign DIV ID based on letter's position in activeWord
+                lettersInActiveWord = lettersToPush[i]; // Find letters in activeWord
+                letterPosition = activeWord[lettersInActiveWord]; // Find letter's position in activeWord
+            document.getElementById(rightDiv).innerHTML = letterPosition; // Write letter to its respective DIV
+            };
+        };
 };
-}
 
 // WRITE correctKeysEntered to lettersToPush ARRAY
 var lettersToPush = [];
@@ -146,8 +142,26 @@ for (i=0; i < (correctKeysEntered.length); i++) {
     if (test3) {
         var testA = activeWord.indexOf(correctKeysEntered[i]);
         lettersToPush.push(testA);
+    };
+};
+
+// CALCULATE # OF GUESSES LEFT AND ROUND #
+function calcGuessesLeft () {
+    if (lettersEntered.length<guessLimit) {
+        roundNum = (Math.ceil((lettersEntered.length+1)/5)*5)/guessLimit;
+        guessesLeft = (guessLimit * roundNum) - lettersEntered.length
+        console.log("USING THE TRUE");
+        console.log("guessesLeft: " + guessesLeft);
+        console.log("lettersEntered: " + lettersEntered.length);
+        console.log("roundNum " + roundNum);
+    } else {
+        console.log("USING THE FALSE");
+        roundNum = (Math.ceil((lettersEntered.length+1)/5)*5)/guessLimit;
+        guessesLeft = (guessLimit * roundNum) - lettersEntered.length;
+        console.log("guessesLeft: " + guessesLeft);
+        console.log("lettersEntered: " + lettersEntered.length);
+        console.log("roundNum " + roundNum);
+        } 
     }
-}
-
-console.log("lettersToPush: " + lettersToPush);
-
+        
+            compScore = compScore + 1;
