@@ -2,9 +2,8 @@
 var wordList = [];
 var activeWord;
 var activeWordLetters = [];
-var keyEntered = "";
 var correctKeysEntered = ["b", "a", "r"];
-window.lettersEntered = [];
+var lettersEntered = [];
 
 ////// GAME LOGIC
 
@@ -16,7 +15,6 @@ wordList = [
     "fooba"
 ]
 console.log(wordList);
-console.log("correctKeysEntered: " + correctKeysEntered);
 
 
 // SELECT RANDOM WORD FROM LIST
@@ -32,22 +30,37 @@ for (var i = 0; i < activeWord.length; i++) {
 
 
 
-
-
 // DETECT KEY PRESSED, PUSH IT TO THE lettersEntered ARRAY
 
-// var lettersEntered = [];
 var keyPressed;
 function myFunction(e) {
-    keyPressed = e.which;
+    keyPressed = e.key;
     lettersEntered.push(keyPressed);
         
-    console.log("lettersEntered: " + lettersEntered);
+    seperateCorrect();
 }
 
 
+var correctLettersToPush = [];
+function seperateCorrect() {
+    for (i=0; i<=lettersEntered.length; i++) {
+        
+        if ((lettersEntered.indexOf(activeWordLetters[i])) != -1) {
+            correctLettersToPush.push(activeWordLetters[i]);
+        }
+    }
+    console.log("correctLettersToPush: " + correctLettersToPush);
 
-console.log("lettersEntered (Global): " + lettersEntered);
+
+    for (i=0; i<=correctLettersToPush.length; i++) {
+    correctKeysEntered[i] = correctLettersToPush[i];
+    }
+    console.log("correctKeysEntered: " + correctKeysEntered);
+
+};
+
+
+
 
 // PAGE FORMATTING
 // -- HIDE UNNECESSARY WORD SPACES
@@ -98,10 +111,10 @@ var textToWrite;
 window.onload = function () {
 
 for (i=0; i < activeWord.length; i++) {
-var para = document.createElement("P"); 
+var para = document.createElement("span"); 
 para.setAttribute("id","letter" + i);                      // Create a <p> element
 // letterNum = activeWord.indexOf(correctKeysEntered[i])
-textToWrite = "test";
+textToWrite = "____";
 var t = document.createTextNode(textToWrite);      // Create a text node
 para.appendChild(t);                                          // Append the text to <p>
 document.getElementById("letters").appendChild(para); 
@@ -137,5 +150,4 @@ for (i=0; i < (correctKeysEntered.length); i++) {
 }
 
 console.log("lettersToPush: " + lettersToPush);
-
 

@@ -1,0 +1,13 @@
+
+#letters-wrapper {
+    text-align: center;
+}
+
+#letters span {
+    padding: 0 5% 0 5%;
+    text-transform: uppercase;
+    /* text-align: center;
+    align-items: center;
+    transform: translate(-50%, -50%); */
+    display: inline-block;
+}
